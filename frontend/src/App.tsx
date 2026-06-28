@@ -40,7 +40,9 @@ interface ApiError {
   detail: string | { msg: string }[];
 }
 
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = window.location.origin.includes('localhost:5173')
+  ? 'http://localhost:8000/api'
+  : '/api';
 
 export default function App() {
   // --- СОСТОЯНИЕ СПИСКА И ФИЛЬТРОВ ---
