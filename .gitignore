@@ -1,0 +1,42 @@
+# venv (Python virtual environment)
+backend/venv/
+backend/.venv/
+**/venv/
+**/.venv/
+venv/
+.venv/
+
+# Python cache and compiled files
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+backend/tickets.sqlite
+
+# Node.js dependencies
+frontend/node_modules/
+**/node_modules/
+node_modules/
+
+# Production build artifacts
+frontend/dist/
+dist/
+
+# Local environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE configurations
+.vscode/
+.idea/
+
+# OS specific files
+.DS_Store
+Thumbs.db
