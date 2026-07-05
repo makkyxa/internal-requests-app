@@ -15,13 +15,14 @@ TicketFlow is a lightweight, responsive, and modern full-stack web application d
 ## 📸 Screenshots
 
 ### Guest Dashboard View
-![Guest Dashboard View](docs/images/dashboard.png)
+![Guest Dashboard View](docs/images/dashboard_v2.png)
 
 ### Administrator Authentication
-![Administrator Authentication](docs/images/login.png)
+![Administrator Authentication](docs/images/login_v2.png)
 
 ### Admin Action Controls
-![Admin Action Controls](docs/images/admin_dashboard.png)
+![Admin Action Controls](docs/images/admin_dashboard_v2.png)
+
 
 ---
 
