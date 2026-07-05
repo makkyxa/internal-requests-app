@@ -40,9 +40,7 @@ interface ApiError {
   detail: string | { msg: string }[];
 }
 
-const API_BASE_URL = window.location.origin.includes('localhost:5173')
-  ? 'http://localhost:8000/api'
-  : '/api';
+const API_BASE_URL = 'http://localhost:8000/api';
 
 export default function App() {
   // --- СОСТОЯНИЕ СПИСКА И ФИЛЬТРОВ ---
@@ -504,16 +502,6 @@ export default function App() {
             </form>
           </div>
 
-          {/* Информационный блок */}
-          <div className="bg-slate-900/30 border border-slate-800/60 rounded-2xl p-5 text-xs text-slate-400 space-y-3">
-            <h3 className="font-bold text-slate-300 uppercase tracking-wider text-[10px]">Бизнес-правила системы:</h3>
-            <ul className="space-y-2 list-disc list-inside">
-              <li>Поиск, сортировка и пагинация выполняются на сервере.</li>
-              <li>Заявки со статусом <span className="text-emerald-400 font-medium">Выполнено (done)</span> заблокированы для изменения и удаления.</li>
-              <li>Нельзя перевести заявку из статуса «Выполнено» в любой другой статус.</li>
-              <li>Удаление заявок доступно только администратору <code className="bg-slate-800/80 px-1.5 py-0.5 rounded text-slate-200">admin:admin</code>.</li>
-            </ul>
-          </div>
         </section>
 
         {/* ПРАВАЯ КОЛОНКА: Списки, Фильтры и Сортировка */}

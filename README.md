@@ -1,101 +1,171 @@
-# TicketFlow — Система Учёта Внутренних Заявок
+# TicketFlow — Internal Request & Ticket Management System
 
-Sleek & modern web application for managing internal tickets and requests, split into a Python/FastAPI backend and a React/TypeScript/TailwindCSS frontend.
+[![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white)](https://python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.109-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?logo=typescript&logoColor=white)](https://typescriptlang.org)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-38B2AC?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![SQLite](https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite&logoColor=white)](https://sqlite.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+TicketFlow is a lightweight, responsive, and modern full-stack web application designed for tracking and managing internal company requests, support tickets, and general tasks. It combines a fast Python/FastAPI backend with a clean React/TypeScript SPA frontend powered by TailwindCSS.
 
 ---
 
-## 🛠 Технологический стек
+## 📸 Screenshots
 
-- **Backend**: Python 3.12 + FastAPI + SQLAlchemy + SQLite (в качестве базы данных)
-- **Frontend**: React + TypeScript + Vite + TailwindCSS + Lucide Icons
+### Guest Dashboard View
+![Guest Dashboard View](docs/images/dashboard.png)
+
+### Administrator Authentication
+![Administrator Authentication](docs/images/login.png)
+
+### Admin Action Controls
+![Admin Action Controls](docs/images/admin_dashboard.png)
 
 ---
 
-## 📂 Структура проекта
+## ✨ Features
 
-```
+- **Server-Side Operations:** High-performance search, multi-column sorting (creation date, priority), status/priority filtering, and pagination handled directly by the SQLAlchemy query builder.
+- **Role-Based Guards (RBAC):** Guest users can view, filter, sort, search, create, and update active tickets. Only authenticated Administrators can perform delete actions.
+- **Strict Business Logic Guards:**
+  - Completed (`done`) tickets are locked for modification, status updates, or deletion.
+  - Completed status is terminal: once a ticket is marked as completed, it cannot be reverted to any active state.
+- **Fluid UI:** Interactive toast notifications, smooth modal transitions, dynamic status badges, and custom pagination selectors.
+
+---
+
+## 🛠 Tech Stack
+
+### Backend
+- **Python 3.12**
+- **FastAPI** — High-performance asynchronous API framework.
+- **SQLAlchemy** — Object-Relational Mapping (ORM) library.
+- **SQLite** — Embedded relational database storage.
+- **Uvicorn** — Lightning-fast ASGI server.
+
+### Frontend
+- **React 19** (Single Page Application)
+- **TypeScript**
+- **Vite** — Next-generation frontend build tooling.
+- **TailwindCSS** — Utility-first styling framework.
+- **Lucide Icons** — Clean SVG icon set.
+
+---
+
+## 📁 Project Structure
+
+```text
 test_tz/
-├── backend/                  # Серверная часть (FastAPI)
-│   ├── app/                  # Исходный код приложения
-│   │   ├── database.py       # Подключение к БД SQLite и сессии
-│   │   ├── models.py         # SQLAlchemy модели данных
-│   │   ├── schemas.py        # Pydantic-схемы для валидации
-│   │   ├── crud.py           # Запросы к БД (фильтры, поиск, пагинация, сортировка)
-│   │   └── main.py           # Роуты API и бизнес-правила
-│   ├── requirements.txt      # Зависимости Python
-│   └── tickets.sqlite        # Файл базы данных SQLite (генерируется при старте)
+├── backend/                   # FastAPI Backend
+│   ├── app/                   # Application Core
+│   │   ├── database.py        # SQLite Engine & SQLAlchemy Session
+│   │   ├── models.py          # SQLAlchemy Models (Ticket schema)
+│   │   ├── schemas.py         # Pydantic Schemas / DTO Validation
+│   │   ├── crud.py            # DB operations (Search, Filter, Pagination, Sort)
+│   │   └── main.py            # API Route Controllers & Business Rules
+│   ├── requirements.txt       # Python Dependencies
+│   └── tickets.sqlite         # SQLite DB File (auto-generated on launch)
 │
-├── frontend/                 # Клиентская часть (React + TypeScript)
+├── frontend/                  # React Frontend SPA
 │   ├── src/
-│   │   ├── App.tsx           # Основной компонент панели управления
-│   │   ├── index.css         # Стили TailwindCSS
-│   │   └── main.tsx          # Точка входа React
-│   ├── index.html            # HTML-каркас и SEO-метатеги
-│   ├── tailwind.config.js    # Конфигурация Tailwind CSS
-│   └── package.json          # Зависимости Node.js
+│   │   ├── App.tsx            # Main Application Dashboard
+│   │   ├── index.css          # Tailwind CSS Directives
+│   │   └── main.tsx           # React entrypoint
+│   ├── index.html             # HTML layout & SEO tags
+│   ├── tailwind.config.js     # Tailwind CSS Configuration
+│   └── package.json           # npm Dependencies & Scripts
 │
-├── .gitignore                # Файл исключений Git (скрывает venv, node_modules, .sqlite)
-└── README.md                 # Описание проекта
+├── docs/
+│   └── images/                # Embedded UI screenshots
+├── .gitignore                 # Git ignore patterns
+└── README.md                  # Project documentation
 ```
 
 ---
 
-## 🚀 Локальный запуск проекта
+## 🚀 Installation & Local Setup
 
-### 1. Запуск Backend (FastAPI)
+### Prerequisite Checklist
+- **Python 3.12+**
+- **Node.js 20+**
+- **npm 10+**
 
-Перейдите в папку `backend` в вашем терминале:
+### 1. Backend Server Setup
+
+Navigate into the `backend` directory:
 ```bash
 cd backend
 ```
 
-1. **Создайте и активируйте виртуальное окружение**:
-   - **На Windows**:
-     ```bash
-     python -m venv venv
-     .\venv\Scripts\activate
-     ```
-   - **На macOS/Linux**:
-     ```bash
-     python3 -m venv venv
-     source venv/bin/activate
-     ```
+Create and activate a virtual environment:
+- **Windows (PowerShell):**
+  ```powershell
+  python -m venv venv
+  .\venv\Scripts\activate
+  ```
+- **macOS / Linux:**
+  ```bash
+  python3 -m venv venv
+  source venv/bin/activate
+  ```
 
-2. **Установите зависимости**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+Install the dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-3. **Запустите сервер**:
-   ```bash
-   uvicorn app.main:app --reload --port 8000
-   ```
-   Сервер запустится по адресу: `http://localhost:8000`
-   Интерактивная документация Swagger доступна по адресу: `http://localhost:8000/docs`
+Launch the development server:
+```bash
+uvicorn app.main:app --reload --port 8000
+```
+- **API URL:** `http://localhost:8000`
+- **Swagger Documentation:** `http://localhost:8000/docs`
 
 ---
 
-### 2. Запуск Frontend (React + Vite)
+### 2. Frontend Application Setup
 
-Перейдите в папку `frontend` в новом окне терминала:
+Open a new terminal window and navigate to the `frontend` directory:
 ```bash
 cd frontend
 ```
 
-1. **Установите зависимости**:
-   ```bash
-   npm install
-   ```
+Install npm dependencies:
+```bash
+npm install
+```
 
-2. **Запустите сервер для разработки**:
-   ```bash
-   npm run dev -- --port 5173
-   ```
-   Приложение откроется по адресу: `http://localhost:5173`
+Start the Vite development server:
+```bash
+npm run dev -- --port 5173
+```
+- **Vite Server URL:** `http://localhost:5173`
 
 ---
 
-## 💼 Административный доступ
-Для удаления заявок воспользуйтесь кнопкой «Вход для Администратора» в правом верхнем углу интерфейса:
-- **Логин**: `admin`
-- **Пароль**: `admin`
+## 🔑 Administrative Access
+
+To remove tickets, authenticate using the **"Вход для Администратора"** button in the header:
+- **Username:** `admin`
+- **Password:** `admin`
+
+---
+
+## 🔗 API Endpoint Reference
+
+| Method | Endpoint | Access Level | Description |
+| :--- | :--- | :--- | :--- |
+| **POST** | `/api/login` | Public | Authenticates credentials and returns a session token. |
+| **GET** | `/api/tickets` | Public | Retrieves a paginated list of tickets. Supports `status`, `priority`, `search`, and sorting parameters. |
+| **POST** | `/api/tickets` | Public | Creates a new ticket (expects title, description, priority, status). |
+| **GET** | `/api/tickets/{id}` | Public | Retrieves specific ticket details. |
+| **PATCH** | `/api/tickets/{id}` | Public | Updates ticket information or changes status. |
+| **DELETE** | `/api/tickets/{id}` | Admin Only | Deletes a ticket (requires `Authorization: Bearer <admin-token>` header). |
+
+---
+
+## 📝 License
+
+Distributed under the MIT License. See `LICENSE` for more details.
